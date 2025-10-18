@@ -23,12 +23,12 @@ export default function CustomRecipesScreen() {
   const { recipe } = route.params || {}; // Pass the  object as a parameter
   console.log("recipe", recipe);
 
-  const favoriteRecipe = useSelector(
-    (state) => state.favorites.favoriterecipes
-  );
+  const favoriteRecipe = useSelector((state) => state.favorites.favoriterecipes);
   console.log("favoriteRecipe from custom", favoriteRecipe);
 
-  const isFavourite = favoriteRecipe.includes(recipe.idCategory); // Adjust this according to your recipe structure
+  const getFavKey = (r) =>
+    r?.idFood || r?.idC || r?.idCategory || r?.customId || (r?.title || "") + "|" + (r?.image || "");
+  const isFavourite = favoriteRecipe?.some((fav) => getFavKey(fav) === getFavKey(recipe));
 
   if (!recipe) {
     return (

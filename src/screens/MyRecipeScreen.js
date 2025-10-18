@@ -20,18 +20,59 @@ export default function MyRecipeScreen() {
   const [recipes, setrecipes] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchrecipes = async () => {};
+  // Fetch recipes from AsyncStorage
+  const fetchrecipes = async () => {
+    try {
+      const stored = await AsyncStorage.getItem("customrecipes");
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setrecipes(Array.isArray(parsed) ? parsed : []);
+      } else {
+        setrecipes([]);
+      }
+    } catch (e) {
+      console.error("Failed to load recipes:", e);
+      setrecipes([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchrecipes();
   }, []);
 
-  const handleAddrecipe = () => {};
+  // Refresh when screen comes into focus (e.g., after add/edit)
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", fetchrecipes);
+    return unsubscribe;
+  }, [navigation]);
 
-  const handlerecipeClick = (recipe) => {};
-  const deleterecipe = async (index) => {};
+  const handleAddrecipe = () => {
+    navigation.navigate("RecipesFormScreen");
+  };
 
-  const editrecipe = (recipe, index) => {};
+  const handlerecipeClick = (recipe) => {
+    navigation.navigate("CustomRecipesScreen", { recipe });
+  };
+  const deleterecipe = async (index) => {
+    try {
+      const updated = [...recipes];
+      updated.splice(index, 1);
+      await AsyncStorage.setItem("customrecipes", JSON.stringify(updated));
+      setrecipes(updated);
+    } catch (e) {
+      console.error("Error deleting recipe:", e);
+    }
+  };
+
+  const editrecipe = (recipe, index) => {
+    navigation.navigate("RecipesFormScreen", {
+      recipeToEdit: recipe,
+      recipeIndex: index,
+      onrecipeEdited: fetchrecipes,
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -60,18 +101,40 @@ export default function MyRecipeScreen() {
                   testID="handlerecipeBtn"
                   onPress={() => handlerecipeClick(recipe)}
                 >
+                  {recipe.image ? (
+                    <Image
+                      source={{ uri: recipe.image }}
+                      style={styles.recipeImage}
+                    />
+                  ) : null}
                   <Text style={styles.recipeTitle}>{recipe.title}</Text>
-                  <Text
-                    style={styles.recipeDescription}
-                    testID="recipeDescp"
-                  ></Text>
+                  <Text style={styles.recipeDescription} testID="recipeDescp">
+                    {recipe.description
+                      ? `${recipe.description.slice(0, 50)}${
+                          recipe.description.length > 50 ? "…" : ""
+                        }`
+                      : ""}
+                  </Text>
                 </TouchableOpacity>
 
                 {/* Edit and Delete Buttons */}
                 <View
                   style={styles.actionButtonsContainer}
                   testID="editDeleteButtons"
-                ></View>
+                >
+                  <TouchableOpacity
+                    style={styles.editButton}
+                    onPress={() => editrecipe(recipe, index)}
+                  >
+                    <Text style={styles.editButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => deleterecipe(index)}
+                  >
+                    <Text style={styles.deleteButtonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             ))
           )}

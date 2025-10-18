@@ -20,8 +20,13 @@ export default function FavoriteScreen() {
   // Assuming you have a similar structure for recipes in your Redux store
   const favoriteRecipes = useSelector((state) => state.favorites);
   const favoriteRecipesList = favoriteRecipes?.favoriterecipes || [];
-  console.log(favoriteRecipes.favoriterecipes);
-  console.log("favoriteRecipesList", favoriteRecipesList);
+
+  const getFavKey = (r) =>
+    r?.idFood ||
+    r?.idC ||
+    r?.idCategory ||
+    r?.customId ||
+    (r?.title || "") + "|" + (r?.image || "");
 
   if (favoriteRecipesList.length === 0) {
     return (
@@ -76,23 +81,29 @@ export default function FavoriteScreen() {
       <FlatList
         data={favoriteRecipesList}
         contentContainerStyle={styles.listContentContainer}
-        keyExtractor={(item) => item.idC || item.idFood}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.cardContainer}
-            onPress={() => navigation.navigate("RecipeDetail", { item })}
-          >
-            <Image
-              source={{ uri: item.recipeImage }}
-              style={styles.recipeImage}
-            />
-            <Text style={styles.recipeTitle}>
-              {item.recipeName && item.recipeName.length > 20
-                ? item.recipeName.slice(0, 20) + "..."
-                : item.recipeName}
-            </Text>
-          </TouchableOpacity>
-        )}
+        keyExtractor={(item) => String(getFavKey(item))}
+        renderItem={({ item }) => {
+          const isApiRecipe = !!(item.idFood || item.recipeName || item.recipeImage);
+          const imageUri = item.recipeImage || item.image;
+          const title = item.recipeName || item.title || "";
+          return (
+            <TouchableOpacity
+              style={styles.cardContainer}
+              onPress={() =>
+                isApiRecipe
+                  ? navigation.navigate("RecipeDetail", { item })
+                  : navigation.navigate("CustomRecipesScreen", { recipe: item })
+              }
+            >
+              {imageUri ? (
+                <Image source={{ uri: imageUri }} style={styles.recipeImage} />
+              ) : null}
+              <Text style={styles.recipeTitle}>
+                {title.length > 20 ? title.slice(0, 20) + "..." : title}
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
       />
     </View>
   );
