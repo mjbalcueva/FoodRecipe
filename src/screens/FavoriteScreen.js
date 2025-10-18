@@ -46,7 +46,7 @@ export default function FavoriteScreen() {
   }
 
   return (
-    <>
+    <View style={{ flex: 1, backgroundColor: "#fff" }}>
       {/* Heading */}
       <View testID="FavoriteRecipes">
         <Text
@@ -75,22 +75,25 @@ export default function FavoriteScreen() {
       <FlatList
         data={favoriteRecipesList}
         contentContainerStyle={styles.listContentContainer}
-        keyExtractor={(item) => item.idC}
+        keyExtractor={(item) => item.idFood}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.cardContainer}
             onPress={() => navigation.navigate("RecipeDetail", { item })}
           >
-            <Image source={{ uri: item.image }} style={styles.recipeImage} />
+            <Image
+              source={{ uri: item.recipeImage }}
+              style={styles.recipeImage}
+            />
             <Text style={styles.recipeTitle}>
-              {item.name.length > 20
-                ? item.name.slice(0, 20) + "..."
-                : item.name}
+              {item.recipeName && item.recipeName.length > 20
+                ? item.recipeName.slice(0, 20) + "..."
+                : item.recipeName}
             </Text>
           </TouchableOpacity>
         )}
       />
-    </>
+    </View>
   );
 }
 
@@ -118,14 +121,17 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    flexDirection: "row",
+    width: "100%",
     alignItems: "center",
+    flexDirection: "column",
   },
   recipeImage: {
-    width: wp(20),
-    height: wp(20),
+    width: "100%",
+    maxWidth: 300,
+    height: 180,
     borderRadius: 10,
-    marginRight: wp(4),
+    resizeMode: "cover",
+    marginBottom: 10,
   },
   recipeTitle: {
     fontSize: hp(2),
