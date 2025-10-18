@@ -1,4 +1,11 @@
-import {View,Text,ScrollView,TouchableOpacity,Image,StyleSheet,} from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+} from "react-native";
 import React from "react";
 import {
   widthPercentageToDP as wp,
@@ -32,9 +39,7 @@ export default function RecipeDetailScreen(props) {
       contentContainerStyle={styles.scrollContent}
     >
       {/* recipe Image */}
-      <View style={styles.imageContainer} testID="imageContainer">
-     
-      </View>
+      <View style={styles.imageContainer} testID="imageContainer"></View>
 
       {/* Back Button and Favorite Button */}
       <View style={styles.topButtonsContainer}>
@@ -58,36 +63,25 @@ export default function RecipeDetailScreen(props) {
       </View>
 
       {/* recipe Description */}
-  
-        <View style={styles.contentContainer}>
-          {/* Title and Category */}
-          <View
-            style={styles.recipeDetailsContainer}
-            testID="recipeDetailsContainer"
-          >
-            <Text style={styles.recipeTitle} testID="recipeTitle">
-         
-              
-              </Text>
-            <Text style={styles.recipeCategory} testID="recipeCategory">
-              </Text>
-          </View>
-          <View style={styles.miscContainer} testID="miscContainer">
-        
-      </View>
 
-      {/* Ingredients */}
-      <View style={styles.sectionContainer}>
-     
-      </View>
+      <View style={styles.contentContainer}>
+        {/* Title and Category */}
+        <View
+          style={styles.recipeDetailsContainer}
+          testID="recipeDetailsContainer"
+        >
+          <Text style={styles.recipeTitle} testID="recipeTitle"></Text>
+          <Text style={styles.recipeCategory} testID="recipeCategory"></Text>
+        </View>
+        <View style={styles.miscContainer} testID="miscContainer"></View>
 
-      {/* Instructions */}
-      <View style={styles.sectionContainer} testID="sectionContainer">
-        
-        </View>
-          {/* Description */}
-         
-        </View>
+        {/* Ingredients */}
+        <View style={styles.sectionContainer}></View>
+
+        {/* Instructions */}
+        <View style={styles.sectionContainer} testID="sectionContainer"></View>
+        {/* Description */}
+      </View>
     </ScrollView>
   );
 }

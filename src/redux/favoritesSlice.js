@@ -7,9 +7,7 @@ const initialState = {
 const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
-  reducers: {
-   
-  },
+  reducers: {},
 });
 
 export const { toggleFavorite } = favoritesSlice.actions;
