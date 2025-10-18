@@ -60,7 +60,7 @@ export default function CustomRecipesScreen() {
           onPress={() => navigation.goBack()}
           style={styles.backButton}
         >
-          <Text>Back</Text>
+          <Text>GoBack</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleToggleFavorite}
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   },
   recipeImage: {
     width: wp(98),
-    height: hp(50),
+    height: hp(35),
     borderRadius: 35,
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40,
