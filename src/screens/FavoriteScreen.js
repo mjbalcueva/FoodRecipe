@@ -36,7 +36,7 @@ export default function FavoriteScreen() {
             borderRadius: 5,
             marginTop: 10,
             width: 100,
-            alignItems: "center ",
+            alignItems: "center",
           }}
         >
           <Text style={{ color: "#fff" }}>Go back</Text>
@@ -58,6 +58,7 @@ export default function FavoriteScreen() {
       </View>
 
       <TouchableOpacity
+        testID="favoriteRecipes"
         onPress={() => navigation.goBack()}
         style={{
           backgroundColor: "#2563EB",
@@ -75,7 +76,7 @@ export default function FavoriteScreen() {
       <FlatList
         data={favoriteRecipesList}
         contentContainerStyle={styles.listContentContainer}
-        keyExtractor={(item) => item.idFood}
+        keyExtractor={(item) => item.idC || item.idFood}
         renderItem={({ item }) => (
           <TouchableOpacity
             style={styles.cardContainer}
