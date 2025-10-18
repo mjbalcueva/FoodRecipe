@@ -119,9 +119,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 50,
   },
-  myFoodText: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: hp(1.5),
-  },
 });

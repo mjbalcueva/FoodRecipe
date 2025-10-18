@@ -71,15 +71,6 @@ const styles = StyleSheet.create({
     marginHorizontal: wp(4), // mx-4 equivalent
     marginTop: hp(2),
   },
-  title: {
-    fontSize: hp(3),
-    fontWeight: "600", // font-semibold
-    color: "#52525B", // text-neutral-600
-    marginBottom: hp(1.5),
-  },
-  loading: {
-    marginTop: hp(20),
-  },
   cardContainer: {
     justifyContent: "center",
     marginBottom: hp(1.5),
