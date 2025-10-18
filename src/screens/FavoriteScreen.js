@@ -71,6 +71,25 @@ export default function FavoriteScreen() {
       >
         <Text style={{ color: "#fff" }}>Go back</Text>
       </TouchableOpacity>
+
+      <FlatList
+        data={favoriteRecipesList}
+        contentContainerStyle={styles.listContentContainer}
+        keyExtractor={(item) => item.idC}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.cardContainer}
+            onPress={() => navigation.navigate("RecipeDetail", { item })}
+          >
+            <Image source={{ uri: item.image }} style={styles.recipeImage} />
+            <Text style={styles.recipeTitle}>
+              {item.name.length > 20
+                ? item.name.slice(0, 20) + "..."
+                : item.name}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
     </>
   );
 }
