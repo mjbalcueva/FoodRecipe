@@ -83,7 +83,11 @@ export default function FavoriteScreen() {
         contentContainerStyle={styles.listContentContainer}
         keyExtractor={(item) => String(getFavKey(item))}
         renderItem={({ item }) => {
-          const isApiRecipe = !!(item.idFood || item.recipeName || item.recipeImage);
+          const isApiRecipe = !!(
+            item.idFood ||
+            item.recipeName ||
+            item.recipeImage
+          );
           const imageUri = item.recipeImage || item.image;
           const title = item.recipeName || item.title || "";
           return (
