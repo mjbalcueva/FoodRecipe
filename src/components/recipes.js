@@ -52,7 +52,10 @@ const ArticleCard = ({ item, index, navigation }) => {
       >
         <Image
           source={{ uri: item.recipeImage }}
-          style={[styles.articleImage, { height: index % 3 === 0 ? hp(25) : hp(35) }]}
+          style={[
+            styles.articleImage,
+            { height: index % 3 === 0 ? hp(25) : hp(35) },
+          ]}
         />
         <Text style={styles.articleText}>{item.recipeName}</Text>
         <Text style={styles.articleDescription} numberOfLines={2}>
